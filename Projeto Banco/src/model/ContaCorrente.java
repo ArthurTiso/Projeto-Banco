@@ -15,6 +15,7 @@ public class ContaCorrente extends Conta {
 		if (valor > saldo) {
 			throw new SaldoInsuficienteException ("Saldo insuficiente!");
 		}
+		saldo = saldo - valor;
 	
 }
 }

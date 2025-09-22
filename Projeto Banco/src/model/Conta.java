@@ -17,7 +17,9 @@ public abstract class Conta{
 	
 	//saque
 	public void sacar(double valor) throws SaldoInsuficienteException{	
-		System.out.println("nada");
+		if (valor <= 0) {
+			throw new IllegalArgumentException("Valor do saqe deve ser positivo!");
+		}
 	}
 	
 	//deposito
