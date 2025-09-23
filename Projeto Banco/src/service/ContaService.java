@@ -1,11 +1,15 @@
 package service;
 
+import java.io.*;
+import java.util.*;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import java.util.function.Predicate;
 
 import java.util.ArrayList; 
 import java.util.List;
@@ -148,8 +152,28 @@ public class ContaService {
 	            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage() + "Erro ao deletar conta");
 	        }
 	    }
+	   
+	   //Filtro 
+	    public List<ContaCorrente> filtrarContas(List<ContaCorrente> contas, Predicate<ContaCorrente> filtro) {
+	        return contas.stream().filter(filtro).toList();
+	    }
+
+	    //Ordenação com comparator
+	    public List<ContaCorrente> ordenarContas(List<ContaCorrente> contas, Comparator<ContaCorrente> comparator) {
+	        List<ContaCorrente> ordenadas = new ArrayList<>(contas);
+	        ordenadas.sort(comparator);
+	        return ordenadas;
+	    }
+	    
+	    
+	 //Calculo de tarifas (Vem do ENUM)
+	    public double aplicarTarifa(ContaCorrente conta, TarifaStrategy estrategia) {
+	        return estrategia.calcularTarifa(conta);
+	    }
+
+	}
 	 
-}
+	  
 
 
 
