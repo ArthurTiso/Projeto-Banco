@@ -93,8 +93,10 @@ public class ContaGUI extends JFrame {
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnSacar = new JButton("Sacar");
         btnDepositar = new JButton("Depositar");
+        JButton btnNovaConta = new JButton("Nova Conta");
         painelBotoes.add(btnSacar);
         painelBotoes.add(btnDepositar);
+        painelBotoes.add(btnNovaConta);
         add(painelBotoes, BorderLayout.SOUTH);
         
         btnSacar.addActionListener(new ActionListener() {
@@ -140,7 +142,7 @@ public class ContaGUI extends JFrame {
                     service.sacar(contaSelecionada, valor);
 
                     // 2. Salvar todas as contas no arquivo
-                    service.saveContas(contas, entrada);
+                    service.saveContas(contas, "conta_atualizada.txt");
 
                     // 3. Atualizar labels
                     atualizarLabels();
@@ -226,6 +228,50 @@ public class ContaGUI extends JFrame {
                             "Erro",
                             JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+
+        btnNovaConta.addActionListener(e -> {
+            try {
+                String numeroStr = JOptionPane.showInputDialog(
+                        ContaGUI.this, "Número da nova conta:", "Nova Conta", JOptionPane.QUESTION_MESSAGE);
+                if (numeroStr == null) return;
+                int numero = Integer.parseInt(numeroStr.trim());
+
+                String titular = JOptionPane.showInputDialog(
+                        ContaGUI.this, "Titular da nova conta:", "Nova Conta", JOptionPane.QUESTION_MESSAGE);
+                if (titular == null || titular.trim().isEmpty()) return;
+
+                String saldoStr = JOptionPane.showInputDialog(
+                        ContaGUI.this, "Saldo inicial:", "Nova Conta", JOptionPane.QUESTION_MESSAGE);
+                if (saldoStr == null) return;
+                double saldo = Double.parseDouble(saldoStr.trim());
+
+                // Criar nova conta
+                ContaCorrente nova = new ContaCorrente(numero, titular, saldo);
+
+                // Adicionar na lista em memória
+                contas.add(nova);
+                listModel.addElement(nova.getNumero() + " - " + nova.getTitular());
+
+                // Salvar no arquivo
+                service.saveContas(contas, "contas_atualizadas.txt");
+
+                JOptionPane.showMessageDialog(ContaGUI.this,
+                        "Conta adicionada com sucesso!",
+                        "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(ContaGUI.this,
+                        "Número ou saldo inválido!",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ioex) {
+                JOptionPane.showMessageDialog(ContaGUI.this,
+                        "Erro ao salvar: " + ioex.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
