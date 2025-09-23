@@ -1,3 +1,4 @@
-1, ArthurI, 0.99
-2, ArthurIII, 2.97
+1, ArthurI, -9.0
+2, ArthurIII, -7.0
 3, ArthurII, -8.0
+1222, viigay, 59.0
