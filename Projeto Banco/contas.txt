@@ -1,3 +1,3 @@
-1234,Arthur,500.0
-1233,Nino,1230.0
-41414,ArthurLindoLegal,14000.0
+1, ArthurI, 1
+2, ArthurIII, 3
+3, ArthurII, 2
